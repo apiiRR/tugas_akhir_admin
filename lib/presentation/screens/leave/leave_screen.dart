@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../data/repository/firestore service/firestore_services.dart';
 import '../../../domain/model/leave_model.dart';
+import '../../../domain/model/profile_model.dart';
 import '../../utils/app_styles.dart';
 
 class LeaveScreen extends StatelessWidget {
@@ -45,19 +46,32 @@ class LeaveScreen extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      "Email",
+                      "Date of Filling",
+                      style: kPoppinsMedium,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Type",
                       style: kPoppinsMedium,
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      "Position",
+                      "Start Leave",
                       style: kPoppinsMedium,
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      "Phone",
+                      "End Leave",
+                      style: kPoppinsMedium,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Note",
                       style: kPoppinsMedium,
                     ),
                   ),
@@ -100,59 +114,96 @@ class LeaveScreen extends StatelessWidget {
                     leaveData.add(element.data());
                   }
 
-                  return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: leaveData.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(defaultPadding),
-                          decoration: BoxDecoration(
-                            color: secondaryColor,
-                            border: Border.all(
-                                width: 2,
-                                color: primaryColor.withOpacity(0.15)),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4)),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "0110219085",
-                                  style: kPoppinsRegular,
+                  return StreamBuilder(
+                      stream: FirestoreServices().streamProfile(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryRed,
+                            ),
+                          );
+                        }
+
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: Text(
+                              "Tidak ada data.",
+                              style: kPoppinsRegular,
+                            ),
+                          );
+                        }
+
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              "Tidak dapat mengambil data.",
+                              style: kPoppinsRegular,
+                            ),
+                          );
+                        }
+
+                        List<ProfileModel> profileData = [];
+
+                        for (var element in snapshot.data!.docs) {
+                          profileData.add(element.data());
+                        }
+
+                        return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: leaveData.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.all(defaultPadding),
+                                decoration: BoxDecoration(
+                                  color: secondaryColor,
+                                  border: Border.all(
+                                      width: 2,
+                                      color: primaryColor.withOpacity(0.15)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(4)),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "Rafi Ramadhana",
-                                  style: kPoppinsRegular,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "0110219085",
+                                        style: kPoppinsRegular,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "Rafi Ramadhana",
+                                        style: kPoppinsRegular,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "ramadhanarafi437@gmail.com",
+                                        style: kPoppinsRegular,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "Mobile Developer",
+                                        style: kPoppinsRegular,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "083866379756",
+                                        style: kPoppinsRegular,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "ramadhanarafi437@gmail.com",
-                                  style: kPoppinsRegular,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "Mobile Developer",
-                                  style: kPoppinsRegular,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "083866379756",
-                                  style: kPoppinsRegular,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                              );
+                            });
                       });
                 }),
             // RecentFiles(),

@@ -6,11 +6,19 @@ import '../../../utils/app_styles.dart';
 
 class FileInfoCard extends StatelessWidget {
   const FileInfoCard({
+    required this.color,
+    required this.svg,
+    required this.title,
+    required this.percentage,
+    required this.data,
     Key? key,
-    required this.info,
   }) : super(key: key);
 
-  final CloudStorageInfo info;
+  final Color color;
+  final String svg;
+  final String title;
+  final int percentage;
+  final int data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,52 +32,47 @@ class FileInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.all(defaultPadding * 0.75),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: info.color!.withOpacity(0.1),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: SvgPicture.asset(
-                  info.svgSrc!,
-                  colorFilter: ColorFilter.mode(
-                      info.color ?? Colors.black, BlendMode.srcIn),
-                ),
-              ),
-              Icon(Icons.more_vert, color: Colors.white54)
-            ],
+          Container(
+            padding: EdgeInsets.all(defaultPadding * 0.75),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: SvgPicture.asset(
+              svg,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            ),
           ),
           Text(
-            info.title!,
+            title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: kPoppinsSemibold.copyWith(fontSize: 18),
           ),
           ProgressLine(
-            color: info.color,
-            percentage: info.percentage,
+            color: color,
+            percentage: percentage,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "${info.numOfFiles} Files",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.white70),
-              ),
-              Text(
-                info.totalStorage!,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.white),
-              ),
+              Text("$data data",
+                  style: kPoppinsRegular.copyWith(
+                      fontSize: 18, color: Colors.white70)
+                  // Theme.of(context)
+                  //     .textTheme
+                  //     .bodySmall!
+                  //     .copyWith(color: Colors.white70),
+                  ),
+              // Text(
+              //   info.totalStorage!,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .bodySmall!
+              //       .copyWith(color: Colors.white),
+              // ),
             ],
           )
         ],
@@ -94,7 +97,7 @@ class ProgressLine extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 5,
+          height: 10,
           decoration: BoxDecoration(
             color: color!.withOpacity(0.1),
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -103,7 +106,7 @@ class ProgressLine extends StatelessWidget {
         LayoutBuilder(
           builder: (context, constraints) => Container(
             width: constraints.maxWidth * (percentage! / 100),
-            height: 5,
+            height: 10,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.all(Radius.circular(10)),

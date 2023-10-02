@@ -32,7 +32,7 @@ class MyFiles extends StatelessWidget {
 class FileInfoCardGridView extends StatelessWidget {
   const FileInfoCardGridView({
     Key? key,
-    this.crossAxisCount = 4,
+    this.crossAxisCount = 3,
     this.childAspectRatio = 1,
   }) : super(key: key);
 
@@ -41,6 +41,29 @@ class FileInfoCardGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List data = [
+      {
+        "title": "Attedance",
+        "data": 5,
+        "svg": "assets/icons/Documents.svg",
+        "color": primaryColor,
+        "percentage": 10,
+      },
+      {
+        "title": "Leave",
+        "data": 1,
+        "svg": "assets/icons/google_drive.svg",
+        "color": Color(0xFFFFA113),
+        "percentage": 5,
+      },
+      {
+        "title": "User",
+        "data": 10,
+        "svg": "assets/icons/one_drive.svg",
+        "color": Color(0xFFA4CDFF),
+        "percentage": 20,
+      }
+    ];
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -49,9 +72,14 @@ class FileInfoCardGridView extends StatelessWidget {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
         mainAxisSpacing: defaultPadding,
-        childAspectRatio: childAspectRatio,
+        childAspectRatio: 1.6,
       ),
-      itemBuilder: (context, index) => FileInfoCard(info: demoMyFiles[index]),
+      itemBuilder: (context, index) => FileInfoCard(
+          color: data[index]["color"],
+          data: data[index]["data"],
+          percentage: data[index]["percentage"],
+          svg: data[index]["svg"],
+          title: data[index]["title"]),
     );
   }
 }

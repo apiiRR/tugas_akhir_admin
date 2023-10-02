@@ -19,7 +19,7 @@ class CloudStorageInfo {
 
 List demoMyFiles = [
   CloudStorageInfo(
-    title: "Documents",
+    title: "Attedance",
     numOfFiles: 1328,
     svgSrc: "assets/icons/Documents.svg",
     totalStorage: "1.9GB",
@@ -27,7 +27,7 @@ List demoMyFiles = [
     percentage: 35,
   ),
   CloudStorageInfo(
-    title: "Google Drive",
+    title: "Leave",
     numOfFiles: 1328,
     svgSrc: "assets/icons/google_drive.svg",
     totalStorage: "2.9GB",
@@ -35,19 +35,11 @@ List demoMyFiles = [
     percentage: 35,
   ),
   CloudStorageInfo(
-    title: "One Drive",
+    title: "User",
     numOfFiles: 1328,
     svgSrc: "assets/icons/one_drive.svg",
     totalStorage: "1GB",
     color: Color(0xFFA4CDFF),
     percentage: 10,
-  ),
-  CloudStorageInfo(
-    title: "Documents",
-    numOfFiles: 5328,
-    svgSrc: "assets/icons/drop_box.svg",
-    totalStorage: "7.3GB",
-    color: Color(0xFF007EE5),
-    percentage: 78,
   ),
 ];

@@ -31,12 +31,12 @@ class StorageDetails extends StatelessWidget {
           StorageInfoCard(
             svgSrc: "assets/icons/Documents.svg",
             title: "On Time",
-            amountOfFiles: "1.3GB",
+            amountOfFiles: "10 User",
           ),
           StorageInfoCard(
             svgSrc: "assets/icons/media.svg",
             title: "Overdue",
-            amountOfFiles: "15.3GB",
+            amountOfFiles: "2 User",
           ),
         ],
       ),
